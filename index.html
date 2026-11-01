@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#172554" />
+  <title>ChapterOne | Online Bookstore</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="announcement">A little more reading, a lot more discovery. <span>Free delivery on orders over ₹799</span></div>
+  <header class="site-header">
+    <a class="brand" href="#" aria-label="ChapterOne home"><span class="brand-mark">C</span><span>chapter<span class="brand-light">one</span><small>BOOKS & BEYOND</small></span></a>
+    <nav class="main-nav" aria-label="Main navigation">
+      <button class="nav-link active" data-view="shop">Discover</button>
+      <button class="nav-link" data-view="orders">My orders</button>
+      <button class="nav-link" data-view="admin">Admin</button>
+    </nav>
+    <div class="header-actions">
+      <button class="icon-btn" id="accountBtn" title="Account" aria-label="Account">♙</button>
+      <button class="cart-button" id="cartBtn"><span>Bag</span><span class="cart-count" id="cartCount">0</span></button>
+    </div>
+  </header>
+
+  <main>
+    <section id="shopView" class="view">
+      <section class="hero">
+        <div class="hero-copy">
+          <p class="eyebrow">YOUR NEXT CHAPTER STARTS HERE</p>
+          <h1>Stories worth<br><em>staying up for.</em></h1>
+          <p class="hero-text">Thoughtful reads, timeless classics and fresh perspectives — find the book you didn't know you needed.</p>
+          <button class="primary-btn" id="exploreBtn">Explore the collection <span>↗</span></button>
+          <div class="hero-note"><span class="tiny-star">✦</span> Curated for curious minds</div>
+        </div>
+        <div class="hero-art">
+          <div class="sun-disc"></div>
+          <div class="book-stack stack-one"><span>THE ART OF<br>LOOKING CLOSER</span></div>
+          <div class="book-stack stack-two"><span>WAYS OF<br>SEEING</span></div>
+          <div class="book-stack stack-three"><span>THE<br>ALCHEMIST</span></div>
+          <div class="hero-sticker">READ<br>MORE.<br>WONDER<br>MORE.</div>
+        </div>
+      </section>
+
+      <section class="catalog-section" id="catalog">
+        <div class="section-heading">
+          <div><p class="eyebrow">THE BOOKSHELF</p><h2>Find your next favourite</h2></div>
+          <p class="muted">A good book is always a good idea.</p>
+        </div>
+        <div class="toolbar">
+          <label class="search-box"><span>⌕</span><input id="searchInput" type="search" placeholder="Search by title or author..." /></label>
+          <select id="categoryFilter" aria-label="Filter by category"><option value="">All categories</option></select>
+          <select id="sortFilter" aria-label="Sort books"><option value="featured">Featured</option><option value="price-low">Price: low to high</option><option value="price-high">Price: high to low</option><option value="title">Title A–Z</option></select>
+        </div>
+        <div class="result-line"><span id="resultCount">Showing books</span><span class="demo-indicator" id="modeIndicator">DEMO PREVIEW</span></div>
+        <div class="book-grid" id="bookGrid"></div>
+        <div class="empty-state hidden" id="emptyState"><div>⌕</div><h3>No books found</h3><p>Try another title, author or category.</p></div>
+      </section>
+    </section>
+
+    <section id="ordersView" class="view hidden page-section">
+      <p class="eyebrow">YOUR READING JOURNEY</p><h2>My orders</h2>
+      <p class="muted">Keep track of the books on their way to you.</p>
+      <div id="ordersList" class="orders-list"></div>
+    </section>
+
+    <section id="adminView" class="view hidden page-section">
+      <div class="section-heading"><div><p class="eyebrow">STORE CONTROL</p><h2>Inventory dashboard</h2></div><span class="admin-tag">ADMIN PREVIEW</span></div>
+      <div class="stats-grid" id="adminStats"></div>
+      <div class="admin-panel">
+        <div class="panel-heading"><div><h3>Book inventory</h3><p class="muted">Add a title to the bookstore catalogue.</p></div></div>
+        <form id="addBookForm" class="add-book-form">
+          <input name="title" placeholder="Book title" required maxlength="200">
+          <input name="author" placeholder="Author" required maxlength="120">
+          <input name="category" placeholder="Category" required maxlength="80">
+          <input name="price" type="number" min="0" step="0.01" placeholder="Price (₹)" required>
+          <input name="stock" type="number" min="0" step="1" placeholder="Stock" required>
+          <button class="primary-btn" type="submit">Add book +</button>
+        </form>
+        <div class="table-wrap"><table><thead><tr><th>Book</th><th>Category</th><th>Price</th><th>Stock</th><th>Action</th></tr></thead><tbody id="inventoryBody"></tbody></table></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer"><div class="footer-brand">chapter<span>one</span></div><p>For the love of a good story.</p><small>© 2026 ChapterOne Bookstore · Student project preview</small></footer>
+
+  <div class="overlay hidden" id="overlay"></div>
+  <aside class="cart-drawer" id="cartDrawer" aria-label="Shopping bag" aria-hidden="true">
+    <div class="drawer-head"><div><p class="eyebrow">YOUR SELECTION</p><h2>Your book bag</h2></div><button class="close-btn" id="closeCart" aria-label="Close">×</button></div>
+    <div id="cartItems" class="cart-items"></div>
+    <div class="cart-bottom"><div class="subtotal"><span>Subtotal</span><strong id="cartSubtotal">₹0</strong></div><p class="muted small">Delivery and taxes calculated at checkout.</p><button class="primary-btn full-btn" id="checkoutBtn">Continue to checkout <span>→</span></button></div>
+  </aside>
+
+  <div class="modal hidden" id="accountModal" role="dialog" aria-modal="true" aria-labelledby="accountTitle">
+    <button class="close-btn modal-close" id="closeAccount" aria-label="Close">×</button>
+    <p class="eyebrow">WELCOME TO CHAPTERONE</p><h2 id="accountTitle">Your reader account</h2>
+    <div class="auth-tabs"><button class="auth-tab active" data-auth="login">Sign in</button><button class="auth-tab" data-auth="register">Create account</button></div>
+    <form id="authForm" class="auth-form">
+      <div id="nameField" class="hidden"><label>Full name<input name="name" placeholder="Your name"></label></div>
+      <label>Email address<input name="email" type="email" placeholder="you@example.com" required></label>
+      <label>Password<input name="password" type="password" placeholder="At least 8 characters" minlength="8" required></label>
+      <button class="primary-btn full-btn" type="submit" id="authSubmit">Sign in</button>
+    </form>
+    <p class="muted small auth-note">Preview mode stores demo account data only in this browser. Do not use a real password.</p>
+  </div>
+
+  <div class="modal hidden" id="checkoutModal" role="dialog" aria-modal="true" aria-labelledby="checkoutTitle">
+    <button class="close-btn modal-close" id="closeCheckout" aria-label="Close">×</button>
+    <p class="eyebrow">ALMOST YOURS</p><h2 id="checkoutTitle">Delivery details</h2>
+    <form id="checkoutForm" class="auth-form">
+      <label>Full name<input name="name" required placeholder="Your full name"></label>
+      <label>Email address<input name="email" type="email" required placeholder="you@example.com"></label>
+      <label>Delivery address<textarea name="address" rows="3" required placeholder="House no., street, city, PIN code"></textarea></label>
+      <button class="primary-btn full-btn" type="submit">Place demo order · <span id="checkoutTotal">₹0</span></button>
+    </form>
+    <p class="muted small auth-note">This preview simulates checkout. No payment is collected.</p>
+  </div>
+  <div class="toast" id="toast" role="status"></div>
+  <script src="api.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
